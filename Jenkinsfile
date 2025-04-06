@@ -19,5 +19,22 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // If Docker is used, build your app's Docker image
+                    sh 'docker build -t springapp .'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy the application (for example, using Docker)
+                    sh 'docker run -d -p 8090:8090 springapp'
+                }
+            }
+        }
     }
 }
