@@ -9,7 +9,8 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 public class Customer {
     @Getter
