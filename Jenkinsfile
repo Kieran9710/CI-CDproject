@@ -47,7 +47,7 @@ pipeline {
                 script {
                     // Run a container from the built image
                     // You can customize the docker run command with necessary options
-                    sh 'docker run -d --name mycontainer my-java-app'
+                    sh 'docker run -d --name mycontainer --network cicd my-java-app'
                 }
             }
         }
