@@ -5,6 +5,11 @@ pipeline {
         maven 'Maven 3'
     }
 
+    environment {
+        SONARQUBE = 'SonarQube'
+        SONAR_TOKEN = credentials('QubeToken') 
+    }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -19,20 +24,16 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('Build Docker Image') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
-                    // If Docker is used, build your app's Docker image
-                    sh 'docker build -t springapp .'
-                }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                script {
-                    // Deploy the application (for example, using Docker)
-                    sh 'docker run -d -p 8090:8090 springapp'
+                    // Run SonarQube analysis
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=CI-CD \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=$SONAR_TOKEN
+                    '''
                 }
             }
         }
