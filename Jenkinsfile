@@ -42,9 +42,22 @@ pipeline {
                 sh ' docker build -f Dockerfile -t my-java-app .'
             }
         }
-        stage('Deploy with Ansible') {
+        stage('Run Docker Container') {
             steps {
-                sh 'ansible-playbook -i inventory.ini -vvv deploy.yml'
+                script {
+                    // Run a container from the built image
+                    // You can customize the docker run command with necessary options
+                    sh 'docker run -d --name mycontainer my-java-app'
+                }
+            }
+        }
+
+        stage('Verify Container') {
+            steps {
+                script {
+                    // Verify that the container is running
+                    sh 'docker ps'
+                }
             }
         }
     }
