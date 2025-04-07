@@ -39,7 +39,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t my-java-app .'
+                sh 'docker build ../Dockerfile -t my-java-app .'
             }
         }
         stage('Deploy with Ansible') {
