@@ -1,6 +1,6 @@
 ---
 - name: Deploy Java App Container
-  hosts: app_servers
+  hosts: ec2
   become: true
 
   tasks:
