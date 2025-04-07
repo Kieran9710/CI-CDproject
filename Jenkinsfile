@@ -40,7 +40,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh 'ls -l' 
-                sh 'docker build -f ../Dockerfile -t my-java-app .'
+                sh 'docker build -f Dockerfile -t my-java-app .'
             }
         }
         stage('Deploy with Ansible') {
