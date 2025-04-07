@@ -1,0 +1,19 @@
+---
+- name: Deploy Java App Container
+  hosts: app_servers
+  become: true
+
+  tasks:
+    - name: Pull latest image from DockerHub (or your registry)
+      docker_image:
+        name: my-java-app
+        source: pull
+
+    - name: Run container
+      docker_container:
+        name: my-java-app
+        image: my-java-app
+        state: started
+        restart_policy: always
+        ports:
+          - "8090:8090"
