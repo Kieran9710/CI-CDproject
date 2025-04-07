@@ -52,6 +52,16 @@ pipeline {
             }
         }
 
+        //stage('Deploy with Ansible') {
+        //    steps {
+        //        script {
+        //            sh '''
+        //            ansible-playbook -i inventory.ini Deploy.yml
+        //            '''
+        //        }
+        //    }
+        //}
+        
         stage('Verify Container') {
             steps {
                 script {
