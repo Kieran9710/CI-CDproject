@@ -23,6 +23,18 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+
+        stage('Test') {
+            steps {
+                // Run unit tests
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
         
         stage('SonarQube Analysis') {
             steps {
