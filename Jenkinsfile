@@ -26,16 +26,11 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Run unit tests
                 sh 'mvn test'
-            }
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml'
-                }
+                junit '**/target/surefire-reports/*.xml'
             }
         }
-        
+                
         stage('SonarQube Analysis') {
             steps {
                 script {
