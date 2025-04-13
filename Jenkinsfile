@@ -8,6 +8,7 @@ pipeline {
         SONARQUBE = 'SonarQube'
         SONAR_TOKEN = credentials('SonarToken') 
     }
+    
     stages {
         stage('Checkout') {
             steps {
