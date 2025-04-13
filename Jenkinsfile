@@ -24,6 +24,7 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        
         stage('SonarQube Analysis') {
             steps {
                 script {
@@ -37,11 +38,14 @@ pipeline {
                 }
             }
         }
+
+        
         stage('Build Docker Image') {
             steps {
                 sh ' docker build -f Dockerfile -t my-java-app .'
             }
         }
+        
         stage('Run Docker Container') {
             steps {
                 script {
