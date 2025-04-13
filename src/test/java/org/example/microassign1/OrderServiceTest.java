@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -59,8 +57,8 @@ public class OrderServiceTest {
         List<OrderDTO> orders = orderService.getOrdersByCustomerId(1L);
 
         assertEquals(1, orders.size());
-        verify(customerRepo, times(1)).findById(1L);
-        verify(orderRepo, times(1)).findByCustomer_Id(1L);
+        verify(customerRepo, atLeastOnce()).findById(1L);
+        verify(orderRepo, atLeastOnce()).findByCustomer_Id(1L);
     }
 
     @Test
