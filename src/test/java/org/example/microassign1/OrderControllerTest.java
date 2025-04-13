@@ -29,6 +29,7 @@ class OrderControllerTest {
     @Mock
     private OrderRepo orderRepo;
 
+    @InjectMocks
     private OrderController orderController;
 
     private Order sampleOrder;
@@ -37,14 +38,19 @@ class OrderControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this); // Initializes mocks
+        MockitoAnnotations.openMocks(this);
+        sampleCustomer = new Customer();
+        sampleCustomer.setId(1L);
+        sampleCustomer.setName("John Doe");
+        sampleCustomer.setEmail("john@example.com");
 
-        // Initialize the controller with mocked dependencies
-        orderController = new OrderController();
+        sampleOrder = new Order();
+        sampleOrder.setId(1L);
+        sampleOrder.setItem("Book");
+        sampleOrder.setAmount(29.99);
+        sampleOrder.setOrderDate(LocalDate.now());
+        sampleOrder.setCustomer(sampleCustomer);
 
-        // Sample customer and order
-        sampleCustomer = new Customer(1L, "John Doe", "john.doe@example.com", null);
-        sampleOrder = new Order(1L, LocalDate.now(), "Item A", 100.0, sampleCustomer);
         sampleOrderDTO = new OrderDTO(sampleOrder, sampleCustomer);
     }
 
@@ -60,8 +66,8 @@ class OrderControllerTest {
 
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
-        assertEquals("Item A", result.getContent().get(0).getItem());
-        assertEquals(100.0, result.getContent().get(0).getAmount());
+        assertEquals("Book", result.getContent().get(0).getItem());
+        assertEquals(29.99, result.getContent().get(0).getAmount());
     }
 
     // Test GET order by ID
@@ -73,8 +79,8 @@ class OrderControllerTest {
 
         assertNotNull(result);
         assertEquals(1L, result.getOrderId());
-        assertEquals("Item A", result.getItem());
-        assertEquals(100.0, result.getAmount());
+        assertEquals("Book", result.getItem());
+        assertEquals(29.99, result.getAmount());
     }
 
     // Test GET orders by Customer ID
@@ -86,7 +92,7 @@ class OrderControllerTest {
 
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("Item A", result.get(0).getItem());
+        assertEquals("Book", result.get(0).getItem());
     }
 
     // Test POST create order
@@ -99,8 +105,8 @@ class OrderControllerTest {
 
         assertNotNull(result);
         assertEquals(1L, result.getOrderId());
-        assertEquals("Item A", result.getItem());
-        assertEquals(100.0, result.getAmount());
+        assertEquals("Book", result.getItem());
+        assertEquals(29.99, result.getAmount());
     }
 
     // Test GET orders by date range
@@ -117,7 +123,7 @@ class OrderControllerTest {
 
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
-        assertEquals("Item A", result.getContent().get(0).getItem());
+        assertEquals("Book", result.getContent().get(0).getItem());
     }
 
     // Test DELETE order
