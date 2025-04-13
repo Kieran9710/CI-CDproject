@@ -4,12 +4,10 @@ pipeline {
     tools {
         maven 'Maven 3'
     }
-
     environment {
         SONARQUBE = 'SonarQube'
         SONAR_TOKEN = credentials('SonarToken') 
     }
-    
     stages {
         stage('Checkout') {
             steps {
